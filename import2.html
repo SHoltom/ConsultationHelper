@@ -74,7 +74,7 @@
     <span><h5>Step 2: Please upload a list of stopwords: </h5><input id="stops" type="file" name="stoplist" value=""/></span>
   </div>
   <div class="col-xs-3"> 
-    <span><h5>Step 3: Please enter the number of topics: </h5><input id="num-topics-input" type="text" name="topics" placeholder="15" value="" size="3"  /> </span>
+    <span><h5>Step 3: Please enter the number of topics: </h5><input id="num-topics-input" type="text" name="topics" placeholder="15" value="" size="3" onchange="reload(this.value)" /> </span>
   </div>
   <div class="col-xs-3" > 
     <span><h5>Step 3: Please press the Run button: </h5>
@@ -722,9 +722,17 @@ function saveState() {
     var docInput = document.getElementById('docs');
 
     var fileDisplayArea = document.getElementById('fileDisplayArea');
+    console.log("localStorage.getItem"+localStorage.getItem("numTop"));
+    var stored=localStorage.getItem("numTop");
+    if(stored != null){
+      document.getElementById('num-topics-input').value= stored;
+      document.getElementById('stops').value="";
+      document.getElementById('docs').value="";
+    }
 
     fileInput.addEventListener('change', function(e) {
       numTopics = document.getElementById('num-topics-input').value;
+
       //console.log(numTopics);
       var file = fileInput.files[0];
       var dfile = docInput.files[0];
@@ -778,6 +786,12 @@ function saveState() {
 }
 
 
+function reload(val) {
+
+  localStorage.setItem("numTop", val);
+  location.reload();
+
+}
 
 
 
